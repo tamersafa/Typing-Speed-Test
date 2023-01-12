@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <title>Typing Test</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+
+    <script>
+        let index = 0;
+        function myFunction(event, words) {
+            let value = event.which;
+            if (value == '32'){
+                var x = document.getElementById("text").value;
+                if (words[index]==x || " "+words[index]==x){ document.getElementsByClassName("words")[index].style.color = 'green';}
+                else { document.getElementsByClassName("words")[index].style.color = 'red'; }
+                index++;
+                document.getElementById("form").reset();
+            }
+        }
+
+        function startTimer(){
+            var count = 60, timer = setInterval(function() {
+                count--;
+                
+                document.getElementById("timer").innerHTML = "00:"+count;
+                
+                if (count < 10) {
+                    document.getElementById("timer").innerHTML = "00:0"+count;
+                }
+                
+                if (count == 0){
+                    clearInterval(timer);
+                    document.getElementById("timer").innerHTML = "EXPIRED";
+                    document.getElementById("form").reset();
+                    document.getElementById("text").disabled = true;
+
+                    var Networds = 0;
+
+                    for(let i=0; i<=index; i++){
+                        if (document.getElementsByClassName("words")[i].style.color == 'green'){
+                            Networds++;
+                        }
+                    }
+
+                    document.getElementById("speed").innerHTML = "Typing speed: " + Networds + " WPM";
+                } 
+        
+            }, 1000);
+        }
+        
+    </script>
+
+    <style>
+        *{
+            background-color: #304066;
+            font-family: "Helvetica";
+        }
+        #cont{
+            margin: auto;
+            width: 75%;
+            height: 38%;
+            position: relative;
+            top: 20%;
+            border: 3px solid black;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 1px 1px;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+        .words{
+            color: #E5E5E5;
+            font-size: 25px;
+            overflow: auto;
+            display: inline;
+        }
+        #input-bar{
+            margin: auto;
+            text-align: center;
+            display: block;
+            position: relative;
+            padding: 12px;
+            top: 20%;
+            width: 50%;
+            border: 1px solid black;
+            background-color: #1F3465;
+            border-radius: 8px;
+            box-shadow: 1px 1px;
+        }
+        form{
+            display: inline;
+        }
+        input{
+            background-color: #E5E5E5;
+            border: none;
+            padding: 5px;
+            position: relative;
+            border-radius: 8px;
+            width: 35%;
+            font-size: 18px;
+        }
+        #res{
+            text-align: center;
+            margin: auto;
+            position: relative;
+            width: 50%;
+            top: 21%;
+            right: 2%;
+        }
+        
+        p{
+            padding: 5px;
+            width: 75px;
+            position: relative;
+            color: #E5E5E5;
+            background-color: transparent;
+            font-size: 22px;
+            display: inline;
+            left: 4%;
+        }
+    </style>
+
+    <body>
+        <div id="cont">
+            {% for word in content %}
+                <pre class="words">{{word}}  </pre>
+            {% endfor %}
+        </div>
+
+        <div id="input-bar">
+            <form id="form">
+                <input onkeypress="myFunction(event, {{content}})" id="text", type="text", onclick="startTimer()">
+            </form>
+            <p id="timer"></p>
+        </div>
+        <br>
+        <div id="res">
+            <p id="speed"></p> <br> <br>
+            <p id="acc"></p>
+        </div>
+    </body>
+
+</html>
