@@ -9,5 +9,5 @@ Inspired by http://10fastfingers.com/
 The list of words are taken from https://www.ef.com/wwen/english-resources/english-vocabulary/top-3000-words/
 
 ### REQUIREMENTS
-Python 3.x
-Flask
+- Python 3.x
+- Flask
